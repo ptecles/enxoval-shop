@@ -238,10 +238,16 @@
 }
 
 @media (max-width: 768px) {
+  .header {
+    padding: 15px 0;
+  }
+  
   .header-container {
+    display: flex;
     flex-wrap: wrap;
     height: auto;
-    padding: 10px 20px;
+    padding: 0 15px;
+    gap: 15px;
   }
   
   .logo {
@@ -249,8 +255,12 @@
     order: 1;
   }
   
+  .logo h1 {
+    font-size: 22px;
+  }
+  
   .header-actions {
-    flex: 1;
+    flex: 0 0 auto;
     order: 2;
     justify-content: flex-end;
   }
@@ -258,48 +268,93 @@
   .nav-menu {
     flex-basis: 100%;
     order: 3;
-    margin-top: 10px;
+    margin-top: 15px;
   }
   
   .nav-menu ul {
     flex-wrap: wrap;
     justify-content: center;
-    gap: 5px;
+    gap: 10px;
   }
   
   .nav-menu li {
     margin: 5px;
   }
   
+  .nav-menu a {
+    font-size: 13px;
+    padding: 8px 12px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+  }
+  
   .search-container {
-    max-width: 150px;
+    max-width: 180px;
   }
   
   .search-input {
-    width: 100px;
+    width: 120px;
+    font-size: 13px;
   }
 }
 
 @media (max-width: 480px) {
+  .header {
+    padding: 10px 0;
+  }
+  
+  .header-container {
+    padding: 0 10px;
+    gap: 10px;
+  }
+  
+  .logo h1 {
+    font-size: 18px;
+  }
+  
   .nav-menu ul {
-    gap: 2px;
+    gap: 8px;
+    flex-direction: column;
+    background-color: rgba(255, 255, 255, 0.95);
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 10px;
   }
   
   .nav-menu li {
-    margin: 3px;
+    margin: 2px 0;
+    width: 100%;
   }
   
   .nav-menu a {
-    font-size: 11px;
-    padding: 5px;
+    font-size: 12px;
+    padding: 10px 15px;
+    background-color: #7d8c93;
+    color: white;
+    border-radius: 6px;
+    display: block;
+    text-align: center;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  .header.scrolled .nav-menu a,
+  .header.active-section .nav-menu a {
+    background-color: #7d8c93;
+    color: white;
   }
   
   .search-container {
-    max-width: 120px;
+    max-width: 140px;
   }
   
   .search-input {
-    width: 80px;
-    padding: 5px 8px;
+    width: 90px;
+    padding: 6px 10px;
+    font-size: 12px;
+  }
+  
+  .search-button {
+    padding: 6px 10px;
   }
 }
