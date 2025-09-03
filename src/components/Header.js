@@ -4,6 +4,7 @@ import '../styles/Header.css';
 
 const Header = () => {
   const [scrolled, setScrolled] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
   const isInSection = location.pathname !== '/';
   
@@ -26,21 +27,36 @@ const Header = () => {
   return (
     <header className={`header ${scrolled ? 'scrolled' : ''} ${isInSection ? 'active-section' : ''}`}>
       <div className="header-container">
+        <button 
+          className="mobile-menu-button"
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+        >
+          <span className={`hamburger ${mobileMenuOpen ? 'active' : ''}`}>
+            <span></span>
+            <span></span>
+            <span></span>
+          </span>
+        </button>
+        
         <div className="logo">
           <Link to="/">
             <h1>Enxoval Inteligente Shop</h1>
           </Link>
         </div>
-        <nav className="nav-menu">
-          <ul>
-            <li><Link to="/">Home</Link></li>
-            <li><Link to="/como-funciona" className="two-line-menu">Como<br/>Funciona</Link></li>
-            <li><Link to="/quarto">Quarto</Link></li>
-            <li><Link to="/passeio">Passeio</Link></li>
-            <li><Link to="/higiene">Higiene</Link></li>
-            <li><Link to="/alimentacao">Alimentação</Link></li>
-            <li><Link to="/brinquedos">Brinquedos</Link></li>
-          </ul>
+        
+        <nav className={`nav-menu ${mobileMenuOpen ? 'mobile-open' : ''}`}>
+          <div className="nav-overlay" onClick={() => setMobileMenuOpen(false)}></div>
+          <div className="nav-content">
+            <ul>
+              <li><Link to="/" onClick={() => setMobileMenuOpen(false)}>Home</Link></li>
+              <li><Link to="/como-funciona" onClick={() => setMobileMenuOpen(false)}>Como Funciona</Link></li>
+              <li><Link to="/quarto" onClick={() => setMobileMenuOpen(false)}>Quarto</Link></li>
+              <li><Link to="/passeio" onClick={() => setMobileMenuOpen(false)}>Passeio</Link></li>
+              <li><Link to="/higiene" onClick={() => setMobileMenuOpen(false)}>Higiene</Link></li>
+              <li><Link to="/alimentacao" onClick={() => setMobileMenuOpen(false)}>Alimentação</Link></li>
+              <li><Link to="/brinquedos" onClick={() => setMobileMenuOpen(false)}>Brinquedos</Link></li>
+            </ul>
+          </div>
         </nav>
         <div className="header-actions">
           <div className="search-container">
