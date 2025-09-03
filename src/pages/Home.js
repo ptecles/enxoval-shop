@@ -73,7 +73,7 @@ const Home = () => {
   return (
     <div className="home-page">
       {/* Hero Banner */}
-      <section className="hero-banner" style={{ backgroundImage: "url('/images/principal.png')" }}>
+      <section className="hero-banner">
         <div className="hero-content">
           <h1>Bem-vinda ao<br />Enxoval Inteligente Shop</h1>
           <p>Conheça a seleção da Elisa de produtos seguros para o seu bebê</p>

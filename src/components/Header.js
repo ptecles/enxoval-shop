@@ -5,12 +5,15 @@ import '../styles/Header.css';
 const Header = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [isSearchActive, setIsSearchActive] = useState(false);
   const location = useLocation();
   const isInSection = location.pathname !== '/';
   
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 100) {
+      // Only apply scrolled style if we're on home page and scrolled down
+      if (location.pathname === '/' && window.scrollY > 100) {
         setScrolled(true);
       } else {
         setScrolled(false);
@@ -18,11 +21,66 @@ const Header = () => {
     };
     
     window.addEventListener('scroll', handleScroll);
+    handleScroll(); // Check initial scroll position
     
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, []);
+  }, [location.pathname]); // Re-run when location changes
+  
+  // Reset scroll state when navigating to home
+  useEffect(() => {
+    if (location.pathname === '/') {
+      setScrolled(false);
+      setIsSearchActive(false); // Reset search when navigating
+      // Only scroll to top if not searching
+      if (!isSearchActive) {
+        window.scrollTo(0, 0);
+      }
+    }
+  }, [location.pathname]);
+  
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if (searchTerm.trim()) {
+      setIsSearchActive(true);
+      // Simple search - filter products on current page
+      const products = document.querySelectorAll('.product-card');
+      let foundProducts = 0;
+      
+      products.forEach(product => {
+        const productName = product.querySelector('.product-name')?.textContent.toLowerCase() || '';
+        if (productName.includes(searchTerm.toLowerCase())) {
+          product.style.display = 'block';
+          product.style.border = '2px solid #7d8c93';
+          foundProducts++;
+          // Scroll to first found product
+          if (foundProducts === 1) {
+            setTimeout(() => {
+              product.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 100);
+          }
+        } else {
+          product.style.display = 'none';
+        }
+      });
+      
+      if (foundProducts === 0) {
+        alert(`Nenhum produto encontrado para "${searchTerm}"`);
+        clearSearch();
+      }
+    }
+  };
+  
+  const clearSearch = () => {
+    setIsSearchActive(false);
+    setSearchTerm('');
+    const products = document.querySelectorAll('.product-card');
+    products.forEach(product => {
+      product.style.display = 'block';
+      product.style.border = '';
+    });
+  };
   
   return (
     <header className={`header ${scrolled ? 'scrolled' : ''} ${isInSection ? 'active-section' : ''}`}>
@@ -59,15 +117,30 @@ const Header = () => {
           </div>
         </nav>
         <div className="header-actions">
-          <div className="search-container">
-            <input type="text" placeholder="Buscar produtos..." className="search-input" />
-            <button className="search-button">
-              <svg className="search-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <circle cx="11" cy="11" r="8"></circle>
-                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-              </svg>
-            </button>
-          </div>
+          <form className="search-container" onSubmit={handleSearch}>
+            <input 
+              type="text" 
+              placeholder="Buscar produtos..." 
+              className="search-input" 
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+            {isSearchActive ? (
+              <button type="button" className="search-button" onClick={clearSearch} title="Limpar busca">
+                <svg className="search-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <line x1="18" y1="6" x2="6" y2="18"></line>
+                  <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+              </button>
+            ) : (
+              <button type="submit" className="search-button" title="Buscar">
+                <svg className="search-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <circle cx="11" cy="11" r="8"></circle>
+                  <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+              </button>
+            )}
+          </form>
         </div>
       </div>
     </header>

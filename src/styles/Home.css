@@ -5,21 +5,26 @@
 
 /* Hero Banner */
 .hero-banner {
-  height: 500px;
+  height: 600px;
   background-size: cover;
   background-position: center;
   position: relative;
   display: flex;
   align-items: center;
-  justify-content: center;
-  text-align: center;
+  justify-content: flex-start;
+  text-align: left;
   color: white;
   margin-bottom: 40px;
   padding-top: 80px;
   width: 100vw;
   margin-left: calc(-50vw + 50%);
   box-sizing: border-box;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding-left: 80px;
+  /* Desktop background - usar sua imagem principal.png */
+  background-image: 
+    linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+    url('../../public/images/principal.png');
+  background-attachment: fixed;
 }
 
 .hero-banner::before {
@@ -40,10 +45,10 @@
 }
 
 .hero-content h1 {
-  font-size: 42px;
+  font-size: 48px;
   margin-bottom: 20px;
   color: white;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
   font-weight: 600;
   line-height: 1.2;
 }
@@ -403,22 +408,31 @@
 
 @media (max-width: 768px) {
   .hero-banner {
-    height: 400px;
-    padding-left: 40px;
-    padding-right: 20px;
+    height: 450px;
+    padding-left: 30px;
+    padding-right: 30px;
+    justify-content: center;
+    text-align: center;
+    /* Tablet background - mesma imagem mas sem fixed */
+    background-image: 
+      linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+      url('../../public/images/principal2.png');
+    background-attachment: scroll;
+    background-position: center top;
   }
   
   .hero-content {
     padding: 0 15px;
+    text-align: center;
   }
   
   .hero-content h1 {
-    font-size: 32px;
+    font-size: 36px;
     line-height: 1.2;
   }
   
   .hero-content p {
-    font-size: 16px;
+    font-size: 18px;
     line-height: 1.4;
   }
   
@@ -474,33 +488,39 @@
 
 @media (max-width: 480px) {
   .hero-banner {
-    height: 300px;
-    padding-left: 20px;
-    padding-right: 20px;
+    height: 350px;
+    padding: 20px;
     text-align: center;
     justify-content: center;
+    /* Mobile background - imagem otimizada para mobile */
+    background-image: 
+      linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+      url('../../public/images/principal3.png');
+    background-attachment: scroll;
+    background-position: center;
+    background-size: cover;
   }
   
   .hero-content {
-    padding: 0 10px;
+    padding: 0 15px;
     text-align: center;
   }
   
   .hero-content h1 {
-    font-size: 24px;
+    font-size: 28px;
     line-height: 1.3;
     margin-bottom: 15px;
   }
   
   .hero-content p {
-    font-size: 14px;
+    font-size: 16px;
     line-height: 1.5;
     margin-bottom: 20px;
   }
   
   .cta-button {
-    padding: 10px 20px;
-    font-size: 13px;
+    padding: 12px 24px;
+    font-size: 14px;
   }
   
   .section-header {
