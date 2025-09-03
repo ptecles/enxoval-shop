@@ -38,7 +38,7 @@ const Header = () => {
         window.scrollTo(0, 0);
       }
     }
-  }, [location.pathname]);
+  }, [location.pathname, isSearchActive]);
   
   const handleSearch = (e) => {
     e.preventDefault();
