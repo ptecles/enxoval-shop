@@ -1,4 +1,4 @@
-# Enxoval Inteligente Shop
+# Enxoval Inteligente Indica
 
 A modern React web application for an online shop specializing in home essentials and enxoval products.
 

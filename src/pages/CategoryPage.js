@@ -25,11 +25,7 @@ const CategoryPage = ({ category, title, bannerImage }) => {
         <div className="info-container">
           <div className="info-column">
             <h3>Produtos Selecionados</h3>
-            <p>Todos os produtos desta categoria foram cuidadosamente selecionados para garantir qualidade e conforto.</p>
-          </div>
-          <div className="info-column">
-            <h3>Dicas Especializadas</h3>
-            <p>Confira nossas dicas sobre como escolher os melhores produtos para {title.toLowerCase()}.</p>
+            <p>Todos os produtos desta categoria foram cuidadosamente escolhidos para garantir qualidade e conforto.</p>
           </div>
         </div>
       </div>

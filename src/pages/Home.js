@@ -7,6 +7,7 @@ const Home = () => {
   const [allProducts, setAllProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [currentIndices, setCurrentIndices] = useState({});
   
   // ID da planilha do Google Sheets
   const sheetId = '1btIezyZKBgMJpLwQ6xyZ2_zqkeo6p6Yv9i3Zei7WviI';
@@ -67,7 +68,32 @@ const Home = () => {
     return allProducts.filter(product => {
       const productCategory = (product.categoria || product.category || '').toLowerCase();
       return productCategory.includes(category.toLowerCase());
-    }).slice(0, 4); // Limita a 4 produtos por categoria
+    });
+  };
+
+  // Função para obter produtos visíveis de uma categoria
+  const getVisibleProducts = (category, categorySlug) => {
+    const products = getProductsByCategory(category);
+    const startIndex = currentIndices[categorySlug] || 0;
+    return products.slice(startIndex, startIndex + 3);
+  };
+
+  // Função para navegar entre produtos
+  const navigateProducts = (categorySlug, direction) => {
+    const products = getProductsByCategory(categorySlug);
+    const currentIndex = currentIndices[categorySlug] || 0;
+    let newIndex;
+
+    if (direction === 'next') {
+      newIndex = currentIndex + 3 >= products.length ? 0 : currentIndex + 3;
+    } else {
+      newIndex = currentIndex - 3 < 0 ? Math.max(0, products.length - 3) : currentIndex - 3;
+    }
+
+    setCurrentIndices(prev => ({
+      ...prev,
+      [categorySlug]: newIndex
+    }));
   };
 
   return (
@@ -75,7 +101,7 @@ const Home = () => {
       {/* Hero Banner */}
       <section className="hero-banner">
         <div className="hero-content">
-          <h1>Bem-vinda ao<br />Enxoval Inteligente Shop</h1>
+          <h1>Bem-vindo ao<br />Enxoval Inteligente Indica</h1>
           <p>Conheça a seleção da Elisa de produtos seguros para o seu bebê</p>
         </div>
       </section>
@@ -92,7 +118,8 @@ const Home = () => {
       ) : (
         <>
           {categories.map(category => {
-            const categoryProducts = getProductsByCategory(category.slug);
+            const allCategoryProducts = getProductsByCategory(category.slug);
+            const categoryProducts = getVisibleProducts(category.slug, category.slug);
             
             return (
               <section className="category-products-section" key={category.id}>
@@ -101,44 +128,66 @@ const Home = () => {
                   <Link to={`/${category.slug}`} className="view-all">Ver Todos</Link>
                 </div>
                 
-                {categoryProducts.length > 0 ? (
-                  <div className="product-grid">
-                    {categoryProducts.map((product, index) => {
-                      const nome = product.nome || product.name || product.produto || '';
-                      const preco = product.preco || product.price || product.valor || '';
-                      const imagem = product.imagem || product.image || product.foto || product.url || '';
-                      const link = product.link || product.comprar || product.compra || '';
-                      
-                      return (
-                        <div className="product-card" key={index}>
-                          <div className="product-image">
-                            {link && <div className="click-indicator">Clique para comprar</div>}
-                            <img 
-                              src={imagem || 'https://via.placeholder.com/300x300?text=Sem+Imagem'} 
-                              alt={nome} 
-                              onClick={() => {
-                                if (link) {
-                                  window.open(link, '_blank', 'noopener,noreferrer');
-                                }
-                              }}
-                              style={{ cursor: link ? 'pointer' : 'default' }}
-                              onError={(e) => {
-                                e.target.onerror = null;
-                                e.target.src = 'https://via.placeholder.com/300x300?text=Imagem+Indisponível';
-                              }}
-                            />
+                {allCategoryProducts.length > 0 ? (
+                  <div className="products-carousel">
+                    {allCategoryProducts.length > 3 && (
+                      <button 
+                        className="carousel-btn prev-btn" 
+                        onClick={() => navigateProducts(category.slug, 'prev')}
+                        aria-label="Produtos anteriores"
+                      >
+                        &#8249;
+                      </button>
+                    )}
+                    
+                    <div className="product-grid">
+                      {categoryProducts.map((product, index) => {
+                        const nome = product.nome || product.name || product.produto || '';
+                        const preco = product.preco || product.price || product.valor || '';
+                        const imagem = product.imagem || product.image || product.foto || product.url || '';
+                        const link = product.link || product.comprar || product.compra || '';
+                        
+                        return (
+                          <div className="product-card" key={index}>
+                            <div className="product-image">
+                              <img 
+                                src={imagem || 'https://via.placeholder.com/300x300?text=Sem+Imagem'} 
+                                alt={nome} 
+                                onClick={() => {
+                                  if (link) {
+                                    window.open(link, '_blank', 'noopener,noreferrer');
+                                  }
+                                }}
+                                style={{ cursor: link ? 'pointer' : 'default' }}
+                                onError={(e) => {
+                                  e.target.onerror = null;
+                                  e.target.src = 'https://via.placeholder.com/300x300?text=Imagem+Indisponível';
+                                }}
+                              />
+                            </div>
+                            <div className="product-info">
+                              <h3 className="product-name">{nome || 'Produto sem nome'}</h3>
+                              <p className="product-price">
+                                {preco 
+                                  ? `R$ ${typeof preco === 'number' ? preco.toFixed(2) : parseFloat(preco.toString().replace(',', '.')).toFixed(2)}` 
+                                  : 'Preço não disponível'}
+                              </p>
+                              {link && <div className="click-indicator">Comprar na Amazon</div>}
+                            </div>
                           </div>
-                          <div className="product-info">
-                            <h3 className="product-name">{nome || 'Produto sem nome'}</h3>
-                            <p className="product-price">
-                              {preco 
-                                ? `R$ ${typeof preco === 'number' ? preco.toFixed(2) : parseFloat(preco.toString().replace(',', '.')).toFixed(2)}` 
-                                : 'Preço não disponível'}
-                            </p>
-                          </div>
-                        </div>
-                      );
-                    })}
+                        );
+                      })}
+                    </div>
+                    
+                    {allCategoryProducts.length > 3 && (
+                      <button 
+                        className="carousel-btn next-btn" 
+                        onClick={() => navigateProducts(category.slug, 'next')}
+                        aria-label="Próximos produtos"
+                      >
+                        &#8250;
+                      </button>
+                    )}
                   </div>
                 ) : (
                   <div className="no-products">

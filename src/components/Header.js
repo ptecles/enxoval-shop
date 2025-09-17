@@ -97,8 +97,8 @@ const Header = () => {
         </button>
         
         <div className="logo">
-          <Link to="/">
-            <h1>Enxoval Inteligente Shop</h1>
+          <Link to="/" onClick={clearSearch}>
+            <img src="/images/logo.png" alt="Enxoval Inteligente Indica" />
           </Link>
         </div>
         
@@ -106,13 +106,13 @@ const Header = () => {
           <div className="nav-overlay" onClick={() => setMobileMenuOpen(false)}></div>
           <div className="nav-content">
             <ul>
-              <li><Link to="/" onClick={() => setMobileMenuOpen(false)}>Home</Link></li>
+              <li><Link to="/" onClick={() => { setMobileMenuOpen(false); clearSearch(); }}>Home</Link></li>
               <li><Link to="/como-funciona" onClick={() => setMobileMenuOpen(false)}>Como Funciona</Link></li>
               <li><Link to="/quarto" onClick={() => setMobileMenuOpen(false)}>Quarto</Link></li>
               <li><Link to="/passeio" onClick={() => setMobileMenuOpen(false)}>Passeio</Link></li>
               <li><Link to="/higiene" onClick={() => setMobileMenuOpen(false)}>Higiene</Link></li>
               <li><Link to="/alimentacao" onClick={() => setMobileMenuOpen(false)}>Alimentação</Link></li>
-              <li><Link to="/brinquedos" onClick={() => setMobileMenuOpen(false)}>Brinquedos</Link></li>
+              <li><a href="https://www.enxovalinteligente.com.br/ig" target="_blank" rel="noopener noreferrer" onClick={() => setMobileMenuOpen(false)}>Curso</a></li>
             </ul>
           </div>
         </nav>

@@ -7,7 +7,7 @@ const ComoFunciona = () => {
       <div className="como-funciona-banner">
         <div className="banner-overlay">
           <h1>Como Funciona</h1>
-          <p><strong>Seja bem-vinda!</strong></p>
+          <p><strong>Seja bem-vindo!</strong></p>
         </div>
       </div>
       

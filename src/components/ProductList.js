@@ -130,7 +130,6 @@ const ProductList = ({ sheetId = '1btIezyZKBgMJpLwQ6xyZ2_zqkeo6p6Yv9i3Zei7WviI',
           return (
             <div className="product-card" key={index}>
               <div className="product-image">
-                {link && <div className="click-indicator">Clique para comprar</div>}
                 <img 
                   src={imagem || 'https://via.placeholder.com/300x300?text=Sem+Imagem'} 
                   alt={nome} 
@@ -153,7 +152,7 @@ const ProductList = ({ sheetId = '1btIezyZKBgMJpLwQ6xyZ2_zqkeo6p6Yv9i3Zei7WviI',
                     ? `R$ ${typeof preco === 'number' ? preco.toFixed(2) : parseFloat(preco.toString().replace(',', '.')).toFixed(2)}` 
                     : 'Preço não disponível'}
                 </p>
-
+                {link && <div className="click-indicator">Comprar na Amazon</div>}
               </div>
             </div>
           );
