@@ -91,6 +91,10 @@
 
 /* Responsive styles */
 @media (max-width: 768px) {
+  .category-banner {
+    margin-top: 0;
+  }
+  
   .info-container {
     flex-direction: column;
     gap: 20px;
@@ -104,6 +108,7 @@
 @media (max-width: 480px) {
   .category-banner {
     padding: 30px 15px;
+    margin-top: 0;
   }
   
   .category-banner h1 {

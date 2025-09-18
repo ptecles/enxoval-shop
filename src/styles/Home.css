@@ -601,6 +601,7 @@
   .hero-banner {
     height: 350px;
     padding: 20px;
+    padding-top: 0;
     text-align: center;
     justify-content: center;
     /* Mobile background - imagem otimizada para mobile */

@@ -360,8 +360,8 @@
   }
   
   .logo img {
-    height: 42px;
-    max-height: 42px;
+    height: 50px;
+    max-height: 50px;
   }
   
   .header-actions {
@@ -451,7 +451,7 @@
   }
   
   .search-input {
-    width: 100px;
+    width: 140px;
     font-size: 12px;
     padding: 8px 12px;
   }
@@ -471,8 +471,8 @@
   }
   
   .logo img {
-    height: 36px;
-    max-height: 36px;
+    height: 45px;
+    max-height: 45px;
   }
   
   .nav-menu.mobile-open .nav-content {
@@ -489,7 +489,7 @@
   }
   
   .search-input {
-    width: 70px;
+    width: 110px;
     padding: 6px 10px;
     font-size: 11px;
   }
